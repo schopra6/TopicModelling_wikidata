@@ -1,3 +1,4 @@
+import pandas as pd
 import spacy 
 from spacy import displacy
 from pprint import pprint
@@ -56,4 +57,7 @@ if __name__ == "__main__":
     sp_wikidata = nlp(wikidata_txt) #apply spacy model to text
     tokens = preprocess(sp_wikidata)
     print(tokens)
+    
+    df = pd.DataFrame(tokens, columns =['Person', 'Wikipedia page text', 'Wikipedia page text after preprocessing', 
+                                        'Wikidata description', 'Wikidata description after preprocessing'])
   
