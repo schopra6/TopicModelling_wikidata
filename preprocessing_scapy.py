@@ -51,8 +51,25 @@ def name_entity_recognition(sp_wikidata):
 
 
 if __name__ == "__main__":
+    path = "insert/path/to/data/files/here"
+    
     with open(r'/content/webnlg-test.txt', encoding='utf-8') as infile:
         wikidata_txt = infile.read()
+   
+    #Read Csv
+    '''
+    wikidata = read_csv(path)
+    '''
+    
+    #Read Json
+    '''
+    import json
+    
+    f = open(path) #opening file
+    wikidata = json.loads(f.read())
+    
+    '''
+    #Depending on which file format we arguement wikidata_txt will need to be adjusted to *.json / *.csv
     
     sp_wikidata = nlp(wikidata_txt) #apply spacy model to text
     tokens = preprocess(sp_wikidata)
