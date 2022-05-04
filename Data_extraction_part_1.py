@@ -21,7 +21,7 @@ categories=['Airports','Artists','Astronauts','Building','Astronomical_objects',
             'Companies','Foods','Transport','Monuments_and_memorials','Politicians','Sports_teams','Sportspeople','Universities_and_colleges','Written_communication']
 #-----DEFINE THE NUMBER OF ARTICLES PER CATEGORY ----------
 k=200
-
+n=5
 #---DEFINING LISTS TO STORE THE DATA-----
 articles_data=[]
 articles_data_2=[]
@@ -127,5 +127,5 @@ for i in range(0,len(articles_data)):
 
 #--------------------SAVE ALL THE DATA INTO A CSV FILE -----------------------------
 articles_csv=pd.DataFrame(articles_data_5,columns=['category','article','page_content','infobox','statements'])
-articles_csv=articles_csv[nlp(articles_csv['page_content']).sents > n]
+articles_csv[articles_csv['page_content'].apply(lambda x : sum(1 for dummy in nlp(x).sents)) > n]
 articles_csv.to_csv('articles.csv', index=False, header=['category','article','page_content','infobox','statements'])
