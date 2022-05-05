@@ -1,0 +1,7 @@
+sklearn
+wikipedia
+wptools
+spacy
+SPARQLWrapper
+numpy
+nltk
