@@ -1,19 +1,10 @@
-# TopicModelling_wikidata
-## clustering and Classifying Articles based on Text and knowledge-base information
+## UE 803: Data Science
+# Project: Clustering and Classifying Articles based on Text and knowledge-base information
 
-
-Clustering (8 points)
-The goal of this exercise is to use the collected data (text and wikidata descriptions) to automatically cluster the Wikipedia documents
-first, using 16 clusters and second, experimenting with different numbers of clusters.
-Your code should include the following functions:
-• a function to train a clustering algorithm on some data using N
-clusters
-• a function to compute both intrinsic (Silhouette coefficient) and
-extrinsic (homogeneity, completeness, v-measure, adjusted Rand
-index) evaluation scores for clustering results.
-• a function to visualise those metrics values for values of N ranging
-from 2 to 16.
-
+## About this project
+In this project, we need to collect information about articles belonging to different categories (such as airports, artists, politicians, sportspeople, etc). Based on this information, we will try to automatically cluster and classify these articles into the correct categories. The source of information we are using are:
+* Wikipedia Online Encyclopedia
+* Wikidata knowledge base
 
 ## Installation
 Note: Following code has been implemented in Python3
@@ -21,6 +12,22 @@ Note: Following code has been implemented in Python3
 1. cd to the directory where ```requirements.txt``` is located;
 
 2. run: `pip install -r requirements.txt` .
+
+## General Overview
+The project constitues of four steps, namely:
+1. Corpus Extraction
+2. Pre-Processing
+3. Clustering
+4. Classifying
+
+### Corpus Extraction
+
+### Pre-Processing
+
+### Clustering
+
+### Classifying
+
 
 # Classification
 
