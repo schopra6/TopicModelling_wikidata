@@ -1,17 +1,19 @@
 import pandas as pd
 import numpy as np
-from sklearn.datasets import load_files
-import os
+import argparse
+
 from sklearn.model_selection import train_test_split
-from sklearn import preprocessing
+
 import nltk
-from nltk.tokenize import word_tokenize
-from sklearn.metrics import ConfusionMatrixDisplay
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix,classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import Perceptron
+from sklearn.utils import shuffle
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Tuning using grid search cross-validation
 # Create an object GridSearchCV
@@ -27,9 +29,13 @@ clf.fit( X_train_tf, Y_train )
 print("Best score: %0.3f" % clf.best_score_)
 
 class PerceptronClassifier:
+
+    def __init__(self):
+        self.model = None
+
     def split_vectorise_data(self,X,y):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=15,
-                                                            stratify=labels)
+                                                            stratify=y)
         tfidf_vectorizer = TfidfVectorizer(max_features=400,
                                            use_idf=True,
                                            stop_words='english',
@@ -39,7 +45,8 @@ class PerceptronClassifier:
         X_test_vec = tfidf_vectorizer.transform(X_test)
 
         return X_train_vec, X_test_vec, y_train, y_test
-    def train(self, X, y:
+
+    def train(self, X, y):
         """
         Function used for training the Perceptron algorithm on the data vectorized using Tf-Idf vectorization
         :param X: sparse matrix with the texts preprocessed by Tf-Idf Vectorizer
@@ -70,14 +77,14 @@ class PerceptronClassifier:
         conf_matrix = confusion_matrix(expected, predicted)
         plt.figure(figsize=(10, 10))
         plot = sns.heatmap(conf_matrix, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes)
-        plt.savefig(f'data/Confusion matrix {num_classes} classes.png')
+        plt.savefig(f'Confusion matrix {num_classes} classes.png')
         plt.clf()
 
         # get precision, recall, F1
         report = classification_report(predicted, expected)
         report_dict = classification_report(predicted, expected, output_dict=True)
         df = pd.DataFrame(report_dict).transpose().round(2)
-        df.to_csv(f'data/Scores {num_classes} classes.csv')
+        df.to_csv(f'Scores {num_classes} classes.csv')
 
         return conf_matrix, report, classes
 
