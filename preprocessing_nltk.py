@@ -3,8 +3,8 @@ import argparse
 import os
 import string
 import pandas as pd
-import spacy 
-from spacy import displacy
+# import spacy 
+# from spacy import displacy
 from pprint import pprint
 import nltk
 from nltk.corpus import stopwords
@@ -69,19 +69,19 @@ class Preprocessor:
         return text.translate(punct_translator)
 
 
-      #POS Taggig each token 
-    def postagging(tokens):
-        spacy_pos_tagged = [(token, token.tag_, token.pos_) for token in tokens]
-        return spacy_pos_tagged
+#       #POS Taggig each token 
+#     def postagging(tokens):
+#         spacy_pos_tagged = [(token, token.tag_, token.pos_) for token in tokens]
+#         return spacy_pos_tagged
 
-      #Apply N.E.R to improve classification algorithm
-    def name_entity_recognition(texts):
-        sentences = segment_sentences(texts)
+#       #Apply N.E.R to improve classification algorithm
+#     def name_entity_recognition(texts):
+#         sentences = segment_sentences(texts)
 
-        for sentence in sentences:
-            print("NEs:", [ne for ne in sentence.ents])
-            displacy.render(sentence, style='ent', jupyter=True)
-        return 
+#         for sentence in sentences:
+#             print("NEs:", [ne for ne in sentence.ents])
+#             displacy.render(sentence, style='ent', jupyter=True)
+#         return 
 
 def main(inputpath, outputpath):
     if os.path.isfile(inputpath):
@@ -99,7 +99,7 @@ def main(inputpath, outputpath):
     print(">>>>> Wikidata description processing ...")
     newdf['preprocessed_description'] = preprocessor.transform(newdf['description'])
     
-    preprocessed_df = pd.DataFrame(columns=['Person', 'Wikipage', 'Preprocessed Wikipage', 'Description', 'Preprocessed Description'])
+    preprocessed_df = newdf[['category', 'page_content', 'preprocessed_page_content', 'description', 'preprocessed_description']]
     columns = ['Person', 'Wikipage', 'Preprocessed Wikipage', 'Description', 'Preprocessed Description']
     preprocessed_df.columns = columns
     #output as csv
