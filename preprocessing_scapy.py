@@ -10,16 +10,17 @@ import nltk
 from nltk.corpus import stopwords
 
 class Preprocessor:
-    def __init__(self, lowercase = True, no_stop=True, no_nums = True,no_punct=True, postagging=False, name_entity_recognition=False, verbose=True):
+    def __init__(self, lowercase = True, isTokenize = True, no_stop=True, no_nums = True,no_punct=True, postagging=False, name_entity_recognition=False):
 
           self.lowercase = lowercase
+          self.isTokenize = isTokenize
           self.no_nums = no_nums
           self.no_stop = no_stop
           self.no_punct = no_punct
           self.postagging = postagging
           self.name_entity_recognition = name_entity_recognition
-          self.verbose = verbose
-          self.nlp = spacy.load('en_core_web_sm')
+          self.stop_words = set(stopwords.words('english'))
+          #self.nlp = spacy.load('en_core_web_sm')
 
     def transform(self, texts):
         if self.lowercase:
@@ -45,20 +46,16 @@ class Preprocessor:
             tokens = self.remove_punct(tokens)
         return tokens
 
-      #sentence segmentation
+            #sentence segmentation
     def segment_sentences(text):
         sentences = []
         for sentence in text:
             sentences.append(sentence)
         return sentences
 
-      #tokenizing each word
     def tokenize(self, text):
-        tokens = []
-        for word in text:
-            tokens.append(word)
-        return tokens
-
+        return nltk.word_tokenize(text)
+    
     
     def lower_case(self, text):
         return text.lower()
@@ -69,10 +66,12 @@ class Preprocessor:
 
       #remove stop words & punctuation & lowercase
     def remove_stop(self, tokens):
-        return  [token for token in tokens if token.is_stop != True]
+        return  [token for token in tokens if token not in self.stop_words]
 
-    def remove_punct(self, tokens):
-        return [token for token in tokens if token.is_punct != True]
+
+    def remove_punct(self, text):
+        punct_translator = str.maketrans('', '', string.punctuation)
+        return text.translate(punct_translator)
 
 
       #POS Taggig each token 
