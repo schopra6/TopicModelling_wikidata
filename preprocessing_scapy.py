@@ -10,32 +10,31 @@ import nltk
 from nltk.corpus import stopwords
 
 class Preprocessor:
-    def __init__(self, lowercase = True, isTokenize = True, no_stop=True, no_nums = True,no_punct=True, postagging=False, name_entity_recognition=False):
+    def __init__(self, isLowercase = True, isTokenize = True, isStop=True, isNums = True, isPunct=True, isPostagging=False, isNER=False):
 
-          self.lowercase = lowercase
+          self.isLowercase = isLowercase
           self.isTokenize = isTokenize
-          self.no_nums = no_nums
-          self.no_stop = no_stop
-          self.no_punct = no_punct
-          self.postagging = postagging
-          self.name_entity_recognition = name_entity_recognition
+          self.isNums = isNums
+          self.isStop = isStop
+          self.isPunct = isPunct
+          self.isPostagging = isPostagging
+          self.isNER = isNER
           self.stop_words = set(stopwords.words('english'))
-          #self.nlp = spacy.load('en_core_web_sm')
 
     def transform(self, texts):
-        if self.lowercase:
+        if self.isLowercase:
             print(">>>>> LOWER CASING ...")
             texts = (list(map(self.lower_case, texts)))
-        if self.no_nums:
+        if self.isNums:
             print(">>>>> REMOVING NUMBERS ...")
             texts = (list(map(self.remove_nums, texts)))
-        if self.no_punct:
+        if self.isPunct:
             print(">>>>> REMOVING PUNCTUATION ...")
             texts = (list(map(self.remove_punct, texts)))
         if self.isTokenize:
             print(">>>>> TOKENIZING ...")
             tokens = (list(map(self.tokenize, texts)))
-        if self.no_stop:
+        if self.isStop:
             print(">>>>> REMOVING STOP WORDS ...")
             tokens = (list(map(self.remove_stop, tokens)))  
             preprocessed_texts = [" ".join(token) for token in tokens]
