@@ -84,38 +84,27 @@ class Preprocessor:
             displacy.render(sentence, style='ent', jupyter=True)
         return 
 
-def main(inputpath: str, outputpath: str, verbose: bool):
-    """
-    Function that starts after calling the script
-    :param inputpath: path to the csv with the data for preprocessing
-    :param outputpath: desired path to the output csv file
-    :param verbose:  if True, the main steps will be printed during the execution
-    """
-     if os.path.isfile(inputpath):
+def main(inputpath, outputpath):
+    if os.path.isfile(inputpath):
         df = pd.read_csv(inputpath)
     else:
         raise FileNotFoundError(f'File {inputpath} is not found. Retry with another name')
-    preprocessor = Preprocessor(verbose=args.verbose)
-    if verbose:
-        print('▶ Wikipage Text processing...')
-    newdf['Wikitext preprocessed'] = preprocessor.transform(df['article'])
-    if verbose:
-        print(">>>>> Wikidata description processing ...")
-    newdf['Wikidescription preprocessed'] = preprocessor.transform(df['description'])
+    preprocessor = Preprocessor()
+    if df['description'].isna().any():
+        newdf = df.dropna()
+        newdf.reset_index(drop=True, inplace=True)
     
-    #Add new dataFrame containing columns   
-    #newdf = df[['Person', 'Wikitext', 'Wikitext preprocessed', 'Wikidescription', 'Wikidescription preprocessed']]  
-    '''
-    New DataFrame: 
-                • column 1: person
-                • column 2: Wikipedia page text
-                • column 3: Wikipedia page text after preprocessing
-                • column 4: Wikidata description
-                • column 5: Wikidata description after preprocessing
-
-    '''
-    #outputs the processed data as a csv to the outputpath specified
-    newdf.to_csv(outputpath, index=False)  
+    print('▶ Wikipage Text processing...')
+    newdf['preprocessed_page_content'] = preprocessor.transform(newdf['page_content'])
+    
+    print(">>>>> Wikidata description processing ...")
+    newdf['preprocessed_description'] = preprocessor.transform(newdf['description'])
+    
+    preprocessed_df = pd.DataFrame(columns=['Person', 'Wikipage', 'Preprocessed Wikipage', 'Description', 'Preprocessed Description'])
+    columns = ['Person', 'Wikipage', 'Preprocessed Wikipage', 'Description', 'Preprocessed Description']
+    preprocessed_df.columns = columns
+    #output as csv
+    preprocessed_df.to_csv(outputpath, index=False)
       
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Preprocessor")
