@@ -1,12 +1,13 @@
+# import modules
 import argparse
 import os
 import string
-
 import pandas as pd
 import spacy 
 from spacy import displacy
 from pprint import pprint
-nlp = spacy.load('en_core_web_sm', entity=True)
+import nltk
+from nltk.corpus import stopwords
 
 class Preprocessor:
     def __init__(self, lowercase = True, no_stop=True, no_nums = True,no_punct=True, postagging=False, name_entity_recognition=False, verbose=True):
