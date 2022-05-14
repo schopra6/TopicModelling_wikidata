@@ -24,27 +24,23 @@ class Preprocessor:
 
     def transform(self, texts):
         if self.lowercase:
-            if self.verbose:
-                print(">>>>> LOWER CASING ...")
+            print(">>>>> LOWER CASING ...")
             texts = (list(map(self.lower_case, texts)))
         if self.no_nums:
-            if self.verbose:
-                print(">>>>> REMOVING NUMBERS ...")
+            print(">>>>> REMOVING NUMBERS ...")
             texts = (list(map(self.remove_nums, texts)))
-        if self.verbose:
-            texts =" ".join(map(str,texts))
-            texts = self.nlp(texts)
-            print(">>>>> TOKENIZING ...")
-            tokens = self.tokenize(texts)
-        if self.no_stop:
-            if self.verbose:
-                print(">>>>> REMOVING STOP WORDS ...")
-            tokens = self.remove_stop(tokens)  
         if self.no_punct:
-            if self.verbose:
-                print(">>>>> REMOVING PUNCTUATION ...")
-            tokens = self.remove_punct(tokens)
-        return tokens
+            print(">>>>> REMOVING PUNCTUATION ...")
+            texts = (list(map(self.remove_punct, texts)))
+        if self.isTokenize:
+            print(">>>>> TOKENIZING ...")
+            tokens = (list(map(self.tokenize, texts)))
+        if self.no_stop:
+            print(">>>>> REMOVING STOP WORDS ...")
+            tokens = (list(map(self.remove_stop, tokens)))  
+            preprocessed_texts = [" ".join(token) for token in tokens]
+        print("TRANSFORMATION COMPLETE !")
+        return preprocessed_texts
 
             #sentence segmentation
     def segment_sentences(text):
