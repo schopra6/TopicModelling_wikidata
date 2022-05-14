@@ -9,6 +9,7 @@ from pprint import pprint
 import nltk
 from nltk.corpus import stopwords
 
+
 class Preprocessor:
     def __init__(self, isLowercase = True, isTokenize = True, isStop=True, isNums = True, isPunct=True, isPostagging=False, isNER=False):
 
