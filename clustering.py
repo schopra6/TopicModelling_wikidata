@@ -147,8 +147,12 @@ class Clusterizer:
   
 
     def visualise(results: dict):
+        """
+        Function for the results visualization. Stores the plot with the results into the folder named 'data'
+        :param results: dictionary of dictionaries with 5 scores for each setting
+        """
         res_df = pd.DataFrame(results)
-        res_df.to_csv('data/Clustering results.csv', index=False)
+        res_df.to_csv('C:/Users/Colmr/Desktop/dsprojject/Clustering results.csv', index=False)
         for metric in list(results.values())[0]:
             x = []
             y = []
@@ -161,32 +165,30 @@ class Clusterizer:
         plt.ylabel('quality')
         plt.title('Metrics')
         plt.legend()
-        plt.savefig('data/Clustering visualization.png')
+        plt.savefig('C:/Users/Colmr/Desktop/dsprojject/Clustering visualization.png')
 
 
-def main(inputpath, verbose):
+def main(inputpath):
     if os.path.isfile(inputpath):
         df = pd.read_csv(inputpath)
         df = shuffle(df).reset_index(drop=True)
     else:
-        raise FileNotFoundError(f'File {inputpath} is not found. Retry with another name')
+        raise FileNotFoundError(f'Preprocessed data at {inputpath} not found. Please ensure your pathname is correct.')
     
     all_results = dict()
-    for option in product(['vectorizer_matrix'], [16, 8, 4, 2]):
-        clusterizer = Clusterizer(verbose)
-        clusterizer.train(df['Wikitext preprocessed'], df['Wikidescription preprocessed'], option[1], option[0])
-        results = clusterizer.evaluate(df['Person'])
-        clusterier.visualise()
-        
-        all_results[f'{option[1]} clust., {option[0][:10]}'] = results
+    for option in product([16, 15,14,13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]):
+    clusterizer = Clusterizer()
+    clusterizer.train(df['Preprocessed Wikipage'], df['Preprocessed Description'], option[0], 'vectorizer_matrix')
+        if option[0]:
+            results = clusterizer.evaluate(df['Person'])
+        all_results[f'{option[0]}clust.'] = results
     Clusterizer.visualise(all_results)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Corpus Clusterizer")
+    parser = argparse.ArgumentParser(description="Clusterizer")
     parser.add_argument("--input", type=str, default='data/preprocessed_data.csv',
-                        help="path to the preprocessed csv file")
-    parser.add_argument('--verbose', help='print out the logs (default: False)', action='store_true')
+                        help="path to preprocessed data csv file")
     args = parser.parse_args()
-    main(args.input, args.verbose)
+    main(args.input)
 
     
