@@ -38,11 +38,11 @@ class Clusterizer:
         self.method = None
 
 
- def train(self, texts, descriptions, n_clusters, method):
-        raw_X = [f'{descr} {text}' for text, descr in zip(texts, descriptions)]
+    def train(self, texts, descriptions, n_clusters, method):
+        rawdata_X = [f'{descr} {text}' for text, descr in zip(texts, descriptions)]
         self.method = method
-        self.X = self.convert_into_tfidf_matrix(raw_X)
-        print(f'▶ Training a model with {n_clusters} clusters using {self.method}')
+        self.X = self.convert_into_tfidf_matrix(rawdata_X)
+        print(f'▶ Model being trained with {n_clusters} clusters using vectorizer-matrix')
 
         # initializing the model, with n clusters and fitting the tfidf matrix
         print(">>>>> MODEL TRAINING COMPLETE ...")
@@ -53,47 +53,32 @@ class Clusterizer:
 
 
     def convert_into_tfidf_matrix(texts):
-      #articles = df['column_name_of_article']
-      #Create a TFIDF vectorizer to convert words to vectors
       vectorizer = TfidfVectorizer(max_features=500,
                                 use_idf=True,
                                 stop_words='english',
                                 tokenizer=nltk.word_tokenize)
-      #apply the vectorizer to the input texts
-      #X = vectorizer.fit_transform(articles)
+    
       X = vectorizer.fit_transform(texts)
       return X
 
-    #Task 1: Create a K means CLustering algorithm
+ 
+    def evaluate(self, labels):
+   
+        if not self.model:
+            raise NotFittedError('Method train should be called first')
+        predicted = self.model.labels_
+        homogeneity = metrics.homogeneity_score(labels, predicted)
+        completeness = metrics.completeness_score(labels, predicted)
+        v_measure = metrics.v_measure_score(labels, predicted)
+        randscore = metrics.adjusted_rand_score(labels, predicted)
+        silhouette = metrics.silhouette_score(self.X, predicted)
 
+        return {'Homogeneity': homogeneity, 'Completeness': completeness, 'V measure': v_measure,
+                'Adjusted Rand Index': randscore, 'Silhouette coefficient': silhouette}
 
-
-
-    def train_cluster(self, X): #X = tdidf_matrix
-        km = KMeans(n_clusters=16, init='k-means++', max_iter=300,
-               verbose=0, random_state=3425)
-        km.fit(X)
-        return km
-
-    # Task 2. a function to compute both intrinsic (Silhouette coefficient) and extrinsic
-
-
-    def compute_score(km):
-      #km = train_cluster(X)        
-      print("Homogeneity: %0.3f" % metrics.homogeneity_score(labels, km.labels_))
-      print("Completeness: %0.3f" % metrics.completeness_score(labels, km.labels_))
-      print("V-measure: %0.3f" % metrics.v_measure_score(labels, km.labels_))
-      print("Adjusted Rand-Index: %.3f"% metrics.adjusted_rand_score(labels, km.labels_))
-
-    # When no ground truth is available
-      print("Silhouette Coefficient: %0.3f" % metrics.silhouette_score(X, km.labels_, sample_size=1000))
-
-    # Task 3. a function to visualise those metrics values for values of N ranging from 2 to 16.    
-
-
-    def visualise_cluster(X, km):
+    def visualise_cluster(self, X, km):
         #X = tfidf_matrix, clusters = km.labels_ 
-        dist = 1 - cosine_similarity(X)
+        dist = 1 - cosine_similarity(self.X)
 
     # Use multidimensional scaling to convert the dist matrix into a 2-dimensional array 
         MDS()
@@ -159,25 +144,7 @@ class Clusterizer:
         plt.show() #show the plot
         plt.savefig('data/Clustering visualization.png')
         
-        
-    def evaluate(self, true: list):
-        """
-        Function for clustering algorithm evaluation
-        :param true: list with the expected clusters for each text
-        :return: dictionary with Homogeneity, Completeness, V measure, Adjusted Rand Index and Silhouette coefficient
-                 scores
-        """
-        if not self.model:
-            raise NotFittedError('Method train should be called first')
-        predicted = self.model.labels_
-        homogeneity = metrics.homogeneity_score(true, predicted)
-        completeness = metrics.completeness_score(true, predicted)
-        v_measure = metrics.v_measure_score(true, predicted)
-        randscore = metrics.adjusted_rand_score(true, predicted)
-        silhouette = metrics.silhouette_score(self.X, predicted)
-
-        return {'Homogeneity': homogeneity, 'Completeness': completeness, 'V measure': v_measure,
-                'Adjusted Rand Index': randscore, 'Silhouette coefficient': silhouette}
+  
 
     def visualise(results: dict):
         res_df = pd.DataFrame(results)
