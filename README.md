@@ -95,7 +95,6 @@ The results are obtained on the data stored in the ```data``` directory:
 **Classification**:
 
 **16 class classification:**
-![Confusion matrix 16 classes](https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Confusion%20matrix%2016%20classes.png)
 
 |**category**                  |**precision**|**recall**|**f1-score**|**support**|
 |------------------------------|---------|------|--------|-------|
@@ -119,7 +118,16 @@ The results are obtained on the data stored in the ```data``` directory:
 |macro avg                     |0.8      |0.81  |0.8     |218.0  |
 |weighted avg                  |0.81     |0.79  |0.79    |218.0  |
 
-## Created By
+## Bonus Analysis
+![Confusion matrix 16 classes](https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Confusion%20matrix%2016%20classes.png)
+
+We did a visualisation on the confusion matrix to identify which category was misidentified and to what. This shows us the reason for low overall scores for sportspeople. 
+Out of 17 test examples for Sportspeople, 9 were identified as Sports_teams category. This is because the word correlation of text from sportspeople with Sports_teams was also probable. Since number of training samples were more in sports_team, so it labelled it sports_team.
+
+
+
+
+##Created By
 * Sahil Chopra
 * Jorge Vasquez
 * Colm Rooney
