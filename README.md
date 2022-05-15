@@ -18,9 +18,9 @@ In order to execute the code from this repository and get the results, the follo
 
 `python data_extraction.py num_articles 100 num_sentences 5`
 
-`python preprocessing_nltk.py `
+`python preprocessing_nltk.py articles.csv /data/
 
-`python clustering.py `
+`python clustering.py data/preprocessing_csv
 
 `python category_classification.py --inputpath data/preprocessed_data.csv`
 
