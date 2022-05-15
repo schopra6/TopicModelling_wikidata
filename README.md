@@ -64,10 +64,8 @@ This step takes, as an input, the csv file (**```data/extracted_data.csv```**) g
 The preprocessed output is stored in **```data/preprocessed_data.csv```**
 
 ### Clustering
-This step takes the **```data/preprocessed_data.csv```** as input which is going to be used to train the KMeans algorithm (**```--input```** param). The methods used in order to process the data are:
+This step takes the **```data/preprocessed_data.csv```** as input which is going to be used to train the KMeans algorithm (**```--input```** param). The method used in order to process the data is:
 * Tf-idk
-* Token presence
-* Token frequency
 
 The results obtained are stored in **```data/Clustering results.csv```** (which shows a comparison table) and **```data/Clustering visualization.png```** (which shows a comparison plot).
 
