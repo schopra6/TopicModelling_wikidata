@@ -17,7 +17,9 @@ Note: Following code has been implemented in Python3
 In order to execute the code from this repository and get the results, the following commands need to be run:
 
 `python data_extraction.py num_articles 100 num_sentences 5`
+
 `python preprocessing_nltk.py `
+
 `python category_classification.py --inputpath data/preprocessed_data.csv`
 
 
