@@ -108,11 +108,12 @@ def main(inputpath, outputpath):
       
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Preprocessor")
-    parser.add_argument("--input", type=str, default='data/data.csv',
+    parser.add_argument("--input", type=str,
                         help="Please provide the pathname to the csv file obtained after data extraction")
     
-    parser.add_argument("--output", type=str, default='data/preprocessed_data.csv',
+    parser.add_argument("--output", type=str,
                         help="Please provide an output path for the preprocessed data")
     
     args = parser.parse_args()
     main(args.input, args.output)
+
