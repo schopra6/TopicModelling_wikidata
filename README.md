@@ -18,11 +18,11 @@ In order to execute the code from this repository and get the results, the follo
 
 `python data_extraction.py num_articles 100 num_sentences 5`
 
-`python preprocessing_nltk.py --input /extracted_data.csv/ --output data/preprocessed_data.csv/
+`python preprocessing_nltk.py --input /extracted_data.csv/ --output data/preprocessed_data.csv/`
 
- python clustering.py --input data/preprocessed_data.csv --output data/
+`python clustering.py --input data/preprocessed_data.csv --output data/`
   
- python category_classification.py --inputpath data/preprocessed_data.csv`
+`python category_classification.py --inputpath data/preprocessed_data.csv`
 
 
 ## General Overview
