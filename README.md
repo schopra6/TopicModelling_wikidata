@@ -68,7 +68,8 @@ The results obtained are stored in **```data/Clustering results.csv```** (which 
 
 ### Classifying
 This step take the **```data/preprocessed_data.csv```** as input which is going to be used to train the Perceptron algorithm. The method used to preprocess the data is Tf-Idf Vectorizer. The results obtained are stored in the data folder. The file obtatined are:
-* Confusion matrix
+
+* `Confusion matrix 16 classes.png` with the confusion matrix for the 16 class classification.
 
 ## Results
 
