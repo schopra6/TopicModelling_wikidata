@@ -1,0 +1,20 @@
+,precision,recall,f1-score,support
+Airports,1.0,0.75,0.86,28.0
+Artists,0.86,0.86,0.86,14.0
+Astronauts,0.77,1.0,0.87,17.0
+Astronomical_objects,1.0,1.0,1.0,9.0
+Building,0.73,0.73,0.73,11.0
+City,1.0,0.95,0.97,20.0
+Comics_characters,0.81,0.93,0.87,14.0
+Companies,0.83,0.71,0.77,7.0
+Foods,0.87,1.0,0.93,13.0
+Monuments_and_memorials,1.0,0.89,0.94,9.0
+Politicians,0.86,0.67,0.75,9.0
+Sports_teams,0.71,0.59,0.64,29.0
+Sportspeople,0.38,0.44,0.41,18.0
+Transport,0.75,0.75,0.75,8.0
+Universities_and_colleges,0.55,0.75,0.63,8.0
+Written_communication,0.67,1.0,0.8,4.0
+accuracy,0.79,0.79,0.79,0.79
+macro avg,0.8,0.81,0.8,218.0
+weighted avg,0.81,0.79,0.79,218.0

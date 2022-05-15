@@ -18,15 +18,6 @@ import matplotlib.pyplot as plt
 # Tuning using grid search cross-validation
 # Create an object GridSearchCV
 
-parameters = [a for a in np.linspace(0.01,1,11)]
-clf = GridSearchCV( estimator=MultinomialNB(), 
-                   param_grid={'alpha':parameters},
-                   scoring='accuracy',
-                   return_train_score=True,
-                   cv=5
-                  )
-clf.fit( X_train_tf, Y_train )
-print("Best score: %0.3f" % clf.best_score_)
 
 class PerceptronClassifier:
 
@@ -34,9 +25,9 @@ class PerceptronClassifier:
         self.model = None
 
     def split_vectorise_data(self,X,y):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=15,
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=150,
                                                             stratify=y)
-        tfidf_vectorizer = TfidfVectorizer(max_features=400,
+        tfidf_vectorizer = TfidfVectorizer(max_features=20000,
                                            use_idf=True,
                                            stop_words='english',
                                            tokenizer=nltk.word_tokenize,
@@ -76,15 +67,15 @@ class PerceptronClassifier:
         # get confusion matrix
         conf_matrix = confusion_matrix(expected, predicted)
         plt.figure(figsize=(10, 10))
-        plot = sns.heatmap(conf_matrix, annot=True, cmap='Blues', xticklabels=classes, yticklabels=classes)
-        plt.savefig(f'Confusion matrix {num_classes} classes.png')
+        plot = sns.heatmap(conf_matrix, annot=True, cmap='YlOrBr', xticklabels=classes, yticklabels=classes)
+        plt.savefig(f'data/Confusion matrix 16 classes.png')
         plt.clf()
 
         # get precision, recall, F1
         report = classification_report(predicted, expected)
         report_dict = classification_report(predicted, expected, output_dict=True)
         df = pd.DataFrame(report_dict).transpose().round(2)
-        df.to_csv(f'Scores {num_classes} classes.csv')
+        df.to_csv(f'data/Scores 16 classes.csv')
 
         return conf_matrix, report, classes
 
@@ -96,7 +87,7 @@ def main(path: str):
     df = pd.read_csv(path)
     df = shuffle(df).reset_index(drop=True)
     classifier = PerceptronClassifier()
-    X_train, X_test, y_train, y_test = classifier.split_vectorise_data(df['text'],df['category'])
+    X_train, X_test, y_train, y_test = classifier.split_vectorise_data(df['Preprocessed Wikipage'],df['Person'])
     classifier.train(X_train, y_train)
     predicted = classifier.predict(X_test)
     classes = np.unique(y_train)
