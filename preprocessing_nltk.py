@@ -94,7 +94,7 @@ def main(inputpath, outputpath):
         newdf = df.dropna()
         newdf.reset_index(drop=True, inplace=True)
     
-    print('▶ Wikipage Text processing...')
+    print('>>>>> Wikipage Text processing...')
     newdf['preprocessed_page_content'] = preprocessor.transform(newdf['page_content'])
     
     print(">>>>> Wikidata description processing ...")
@@ -108,10 +108,10 @@ def main(inputpath, outputpath):
       
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Preprocessor")
-    parser.add_argument("--input", type=str,
+    parser.add_argument("--input", type=str, default='data/extracted_data.csv',
                         help="Please provide the pathname to the csv file obtained after data extraction")
     
-    parser.add_argument("--output", type=str,
+    parser.add_argument("--output", type=str, default='data/preprocessed_data.csv',
                         help="Please provide an output path for the preprocessed data")
     
     args = parser.parse_args()
