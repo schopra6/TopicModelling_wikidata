@@ -119,7 +119,7 @@ The results are obtained on the data stored in the ```data``` directory:
 |macro avg                     |0.8      |0.81  |0.8     |218.0  |
 |weighted avg                  |0.81     |0.79  |0.79    |218.0  |
 
-##Created By
+## Created By
 * Sahil Chopra
 * Jorge Vasquez
 * Colm Rooney
