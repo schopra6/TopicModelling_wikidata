@@ -1,20 +1,21 @@
+# import modules
 import argparse
 import os
 from collections import Counter
 from itertools import product
 from statistics import median, mean
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-import nltk
-from nltk import word_tokenize
-from sklearn.cluster import KMeans
-from sklearn import metrics
-#visulaisation
-
 import matplotlib.pyplot as plt
-import matplotlib as mpl
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.manifold import MDS
+import numpy as np
+import pandas as pd
+from nltk import word_tokenize
+from scipy import stats
+from sklearn import metrics
+from sklearn.cluster import KMeans
+from sklearn.exceptions import NotFittedError
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.utils import shuffle
+
 '''
 1. a function to train a clustering algorithm on some data using N
 clusters
@@ -52,7 +53,7 @@ class Clusterizer:
 
 
 
-    def convert_into_tfidf_matrix(texts):
+    def convert_into_tfidf_matrix(self, texts):
       vectorizer = TfidfVectorizer(max_features=500,
                                 use_idf=True,
                                 stop_words='english',
@@ -75,75 +76,6 @@ class Clusterizer:
 
         return {'Homogeneity': homogeneity, 'Completeness': completeness, 'V measure': v_measure,
                 'Adjusted Rand Index': randscore, 'Silhouette coefficient': silhouette}
-
-#     def visualise_cluster(self, X, km):
-#         #X = tfidf_matrix, clusters = km.labels_ 
-#         dist = 1 - cosine_similarity(self.X)
-
-#     # Use multidimensional scaling to convert the dist matrix into a 2-dimensional array 
-#         MDS()
-#         # n_components=2 to plot results in a two-dimensional plane
-#         # "precomputed" because the  distance matrix dist is already computed
-#         # `random_state` set to 1 so that the plot is reproducible.
-#         mds = MDS(n_components=2, dissimilarity="precomputed", random_state=1)
-#         pos = mds.fit_transform(dist)  # shape (n_components, n_samples)
-#         xs, ys = pos[:, 0], pos[:, 1]
-
-#         #set up colors per clusters using a dict
-#         # #1b9e77 (green) #d95f02 (orange) #7570b3 (purple) #e7298a (pink)
-#         #Label categories
-#         cluster_colors = {0: '#f0140c', 1: '#ad7144', 2: '#f5b92f', 3: '#e8f007', 4: '#88e014', \
-#                       5:"#0eedb2", 6:"#0dafdb", \
-#                       7:"#1330ed", 8:"#9a09e8", 9:"#e605b1", 10:"#c4a29d", 11:"#695232", 12:"#f7f088", 13:"#7e8778", \
-#                       14:"#7dada2", 15:"#628cf5"}
-
-#         #set up cluster names using a dict
-#         #cluster_names = {0: 'techno'}
-
-#         #some ipython magic to show the matplotlib plots inline
-#         %matplotlib inline 
-
-#         #create data frame that has the result of the MDS plus the cluster numbers and titles
-#         #km.labels_ == clusters
-#         df = pd.DataFrame(dict(x=xs, y=ys, label=km.labels_))
-
-#         #group by cluster
-#         groups = df.groupby('label')
-
-#         # set up plot
-#         fig, ax = plt.subplots(figsize=(17, 9)) # set size
-#         ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
-
-#         #iterate through groups to layer the plot
-#         #note that I use the cluster_name and cluster_color dicts with the 'name' lookup to return the appropriate color/label
-#         for name, group in groups:
-#             ax.plot(group.x, group.y, marker='o', linestyle='', ms=12, 
-#                 #    label=cluster_names[name], 
-#                     color=cluster_colors[name], 
-#                     mec='none')
-#             ax.set_aspect('auto')
-#             ax.tick_params(\
-#                 axis= 'x',          # changes apply to the x-axis
-#                 which='both',      # both major and minor ticks are affected
-#                 bottom=False,      # ticks along the bottom edge are off
-#                 top=False,         # ticks along the top edge are off
-#                 labelbottom=False)
-#             ax.tick_params(\
-#                 axis= 'y',         # changes apply to the y-axis
-#                 which='both',      # both major and minor ticks are affected
-#                 left=False,      # ticks along the bottom edge are off
-#                 top=False,         # ticks along the top edge are off
-#                 labelleft=False)
-
-#         ax.legend(numpoints=1)  #show legend with only 1 point
-#         plt.xlabel('number of clusters and method')
-#         plt.ylabel('quality')
-#         plt.title('Metrics')
-#         plt.legend()
-
-#         plt.show() #show the plot
-#         plt.savefig('data/Clustering visualization.png')
-        
   
 
     def visualise_cluster(results):
@@ -157,7 +89,7 @@ class Clusterizer:
                 y.append(results[result][metric])
             plt.plot(x, y, label=metric)
         plt.gcf().set_size_inches(10, 5)
-        plt.xlabel('number of clusters and method')
+        plt.xlabel('number of clusters')
         plt.ylabel('quality')
         plt.title('Metrics')
         plt.legend()
@@ -176,13 +108,13 @@ def main(inputpath):
         clusterizer = Clusterizer()
         clusterizer.train(df['Preprocessed Wikipage'], df['Preprocessed Description'], option[0], 'vectorizer_matrix')
         if option[0]:
-            results = clusterizer.evaluate(df['Person'])
+            results = clusterizer.compute_scores(df['Person'])
         all_results[f'{option[0]}clust.'] = results
-    Clusterizer.visualise(all_results)
+    Clusterizer.visualise_cluster(all_results)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Clusterizer")
-    parser.add_argument("--input", type=str, default='data/preprocessed_data.csv',
+    parser.add_argument("--input", type=str,
                         help="path to preprocessed data csv file")
     args = parser.parse_args()
     main(args.input)
