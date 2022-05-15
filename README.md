@@ -2,7 +2,7 @@
 # Project: Clustering and Classifying Articles based on Text and knowledge-base information
 
 ## About this project
-In this project, we need to collect information about articles belonging to different categories (such as airports, artists, politicians, sportspeople, etc.) Based on this information, we will try to automatically cluster and classify these articles into the correct categories. The source of information we are using are:
+In this project, we need to collect information about articles belonging to different categories (such as airports, artists, politicians, sportspeople, etc). Based on this information, we will try to automatically cluster and classify these articles into the correct categories. The source of information we are using are:
 * Wikipedia Online Encyclopedia
 * Wikidata knowledge base
 
@@ -14,15 +14,15 @@ Note: Following code has been implemented in Python3
 2. run: `pip install -r requirements.txt` .
 
 ## General Overview
-The project consists of four steps, namely:
+The project constitues of four steps, namely:
 1. Corpus Extraction
 2. Pre-Processing
 3. Clustering
 4. Classifying
 
 
-### Corpus Extraction 
-This step extracts information about articles from wikipedia and wikidata. These articles belong to the categories: 
+### Corpus Extraction
+This step extracts information about articles from wikipedia and wikidata. These articles belong to the categories:
 * Airports
 * Artists
 * Astronauts
@@ -67,7 +67,11 @@ This step take the **```data/preprocessed_data.csv```** as input which is going 
 
 The results are obtained on the data stored in the ```data``` directory:
 
-<<<<<<< HEAD
+**Clustering**:
+
+![Clustering visualization](https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Clustering%20visualization.png)
+
+
 **Classification**:
 
 **16 class classification:**
@@ -94,10 +98,3 @@ The results are obtained on the data stored in the ```data``` directory:
 |accuracy                      |0.79     |0.79  |0.79    |0.79   |
 |macro avg                     |0.8      |0.81  |0.8     |218.0  |
 |weighted avg                  |0.81     |0.79  |0.79    |218.0  |
-
-=======
-**Clustering**:
->>>>>>> origin/main
-
-![Clustering visualization](https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Clustering%20visualization.png)
-
