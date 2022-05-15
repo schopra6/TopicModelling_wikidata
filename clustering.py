@@ -32,7 +32,7 @@ class Clusterizer:
     '''
     Class to perform clustering on the preprocessed dataFrame
     '''
-   def __init__(self):
+    def __init__(self):
         self.model = None
         self.X = None
         self.method = None
@@ -173,8 +173,8 @@ def main(inputpath):
     
     all_results = dict()
     for option in product([16, 15,14,13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]):
-    clusterizer = Clusterizer()
-    clusterizer.train(df['Preprocessed Wikipage'], df['Preprocessed Description'], option[0], 'vectorizer_matrix')
+        clusterizer = Clusterizer()
+        clusterizer.train(df['Preprocessed Wikipage'], df['Preprocessed Description'], option[0], 'vectorizer_matrix')
         if option[0]:
             results = clusterizer.evaluate(df['Person'])
         all_results[f'{option[0]}clust.'] = results
