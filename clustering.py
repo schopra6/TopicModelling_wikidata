@@ -15,7 +15,9 @@ from sklearn.cluster import KMeans
 from sklearn.exceptions import NotFittedError
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.utils import shuffle
-
+"""
+@author: Sahil Chopra,Jorge Vasquez,Colm Rooney
+"""
 '''
 1. a function to train a clustering algorithm on some data using N
 clusters

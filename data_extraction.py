@@ -2,8 +2,7 @@
 """
 Created on Wed Apr 27 17:46:57 2022
 
-@author: JORGE
-@modified :SAHIL
+@author: Jorge Vasquez,Sahil Chopra,Colm Rooney
 """
 
 import wikipedia

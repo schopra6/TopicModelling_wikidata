@@ -1,3 +1,6 @@
+"""
+@author: Sahil Chopra,Jorge Vasquez,Colm Rooney
+"""
 import pandas as pd
 import numpy as np
 import argparse
@@ -14,9 +17,6 @@ from sklearn.linear_model import Perceptron
 from sklearn.utils import shuffle
 import seaborn as sns
 import matplotlib.pyplot as plt
-
-# Tuning using grid search cross-validation
-# Create an object GridSearchCV
 
 
 class PerceptronClassifier:
