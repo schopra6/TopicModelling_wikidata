@@ -127,7 +127,7 @@ Out of 17 test examples for Sportspeople, 9 were identified as Sports_teams cate
 
 
 
-##Created By
+## Created By
 * Sahil Chopra
 * Jorge Vasquez
 * Colm Rooney
