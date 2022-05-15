@@ -32,30 +32,23 @@ class Clusterizer:
     '''
     Class to perform clustering on the preprocessed dataFrame
     '''
-    def __init__(self, verbose):
-        self.verbose = True
+   def __init__(self):
         self.model = None
         self.X = None
         self.method = None
 
 
-    def train(self, texts, descriptions, n_clusters, method):
+ def train(self, texts, descriptions, n_clusters, method):
         raw_X = [f'{descr} {text}' for text, descr in zip(texts, descriptions)]
         self.method = method
+        self.X = self.convert_into_tfidf_matrix(raw_X)
+        print(f'▶ Training a model with {n_clusters} clusters using {self.method}')
 
-        if self.method == 'vectorizer-matrix':
-            self.X = self.convert_into_tfidf_matrix(raw_X)
-        else:
-            raise KeyError(
-                f'Method {method} for preprocessing is not found. Try one of these: tf-idf, tokens, token frequency')
-        if self.verbose:
-            print(f'▶ Training a model with {n_clusters} clusters using {self.method}')
-
-        # initializing the model, # fitting the model with the transformed data
-        self.model = KMeans(n_clusters=n_clusters)
-        # fitting the model with the transformed data
-        self.model.fit(self.X)
+        # initializing the model, with n clusters and fitting the tfidf matrix
         print(">>>>> MODEL TRAINING COMPLETE ...")
+        self.model = KMeans(n_clusters=n_clusters, init='k-means++', max_iter=300,
+               verbose=0, random_state=3425)
+        self.model.fit(self.X)
 
 
 
