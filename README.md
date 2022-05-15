@@ -22,8 +22,23 @@ The project constitues of four steps, namely:
 
 
 ### Corpus Extraction 
-This step extracts information about articles from wikipedia and wikidata. These articles belong to the categories: 'Airports','Artists','Astronauts','Building','Astronomical_objects','City','Comics_characters',
-'Companies','Foods','Transport','Monuments_and_memorials','Politicians','Sports_teams','Sportspeople','Universities_and_colleges','Written_communication'.
+This step extracts information about articles from wikipedia and wikidata. These articles belong to the categories: 
+* Airports
+* Artists
+* Astronauts
+* Building
+* Astronomical_objects
+* City
+* Comics_characters
+* Companies
+* Foods
+* Transport
+* Monuments_and_memorials
+* Politicians
+* Sports_teams
+* Sportspeople
+* Universities_and_colleges
+* Written_communication'.
 
 The script used by the Corpus Extraction gets k (**```num_articles```** param) articles from each category and stores the following features such as: description, page content (where the number n of sentences is represented by the **```num_sentences```** param) , infobox, wikidata statements (triples). The result is stored in the 'articles.csv'.
 
@@ -54,8 +69,5 @@ The results are obtained on the data stored in the ```data``` directory:
 
 **Clustering**:
 
-![Clustering visualization](https://https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Clustering%20visualization.png)
-
-
-
+![Clustering visualization](https://github.com/schopra6/TopicModelling_wikidata/blob/main/data/Clustering%20visualization.png)
 
