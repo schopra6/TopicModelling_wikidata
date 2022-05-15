@@ -78,9 +78,9 @@ class Clusterizer:
                 'Adjusted Rand Index': randscore, 'Silhouette coefficient': silhouette}
   
 
-    def visualise_cluster(results):
+    def visualise_cluster(results, outputpath):
         results_df = pd.DataFrame(results)
-        results_df.to_csv('C:/Users/Colmr/Desktop/dsprojject/Clustering results.csv', index=False)
+        results_df.to_csv(f'{outputpath}/Clustering results.csv', index=False)
         for metric in list(results.values())[0]:
             x = []
             y = []
@@ -93,10 +93,10 @@ class Clusterizer:
         plt.ylabel('quality')
         plt.title('Metrics')
         plt.legend()
-        plt.savefig('C:/Users/Colmr/Desktop/dsprojject/Clustering visualization.png')
+        plt.savefig(f'{outputpath}/Clustering visualization.png')
 
 
-def main(inputpath):
+def main(inputpath, outputpath):
     if os.path.isfile(inputpath):
         df = pd.read_csv(inputpath)
         df = shuffle(df).reset_index(drop=True)
@@ -110,13 +110,15 @@ def main(inputpath):
         if option[0]:
             results = clusterizer.compute_scores(df['Person'])
         all_results[f'{option[0]}clust.'] = results
-    Clusterizer.visualise_cluster(all_results)
+    Clusterizer.visualise_cluster(all_results, outputpath)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Clusterizer")
     parser.add_argument("--input", type=str,
-                        help="path to preprocessed data csv file")
+                        help="Please add path to preprocessed data csv file")
+    parser.add_argument("--output", type=str,
+                        help="Please add path to save clustering results")
     args = parser.parse_args()
-    main(args.input)
+    main(args.input, args.output)
 
     
