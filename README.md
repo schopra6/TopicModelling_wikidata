@@ -20,6 +20,8 @@ In order to execute the code from this repository and get the results, the follo
 
 `python preprocessing_nltk.py `
 
+`python clustering.py `
+
 `python category_classification.py --inputpath data/preprocessed_data.csv`
 
 
